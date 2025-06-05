@@ -5,6 +5,7 @@ import { Cart } from "../pages/Cart";
 import { HomePage } from "../pages/HomePage";
 import { Dashboard } from "../pages/Admin/Dashboard";
 import { OrderManagement } from "../pages/Admin/OrderManagement";
+import { Login } from "../pages/Login";
 
 
 export function AppRoutes() {
@@ -17,6 +18,7 @@ export function AppRoutes() {
                <Route path="/admin/dashboard" element={<Dashboard/>} />
                <Route path="admin/order-management" element={<OrderManagement/>} />
             </Route>
+            <Route path="/login" element={<Login/>} />
         </Routes>
     );
 }
