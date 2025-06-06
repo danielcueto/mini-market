@@ -1,7 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { type AppDispatch } from '../redux/store';
-import { updateAllUsers, selectUsers, selectUserById } from '../redux/slices/usersSlice';
-import type { User } from '../interfaces/User';
+import { useDispatch, useSelector } from "react-redux";
+import { type AppDispatch } from "../redux/store";
+import {
+  updateAllUsers,
+  selectUsers,
+  selectUserById,
+  setUserLoggedInStatus,
+} from "../redux/slices/usersSlice";
+import type { User } from "../interfaces/User";
 
 export const useUsers = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -11,5 +16,7 @@ export const useUsers = () => {
     users,
     getUser: (id: string) => useSelector(selectUserById(id)),
     updateAllUsers: (newUsers: User[]) => dispatch(updateAllUsers(newUsers)),
+    setIsLogged: (id: string, isLogged: boolean) =>
+      dispatch(setUserLoggedInStatus({ id, isLogged })),
   };
 };
