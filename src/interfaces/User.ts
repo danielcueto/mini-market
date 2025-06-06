@@ -5,9 +5,3 @@ export interface User {
   email: string;
   password: string;
 }
-
-export interface UsersContextType {
-  users: User[];
-  getUser: (id: string) => User | undefined;
-  updateAllUsers: (product: User[]) => void;
-}

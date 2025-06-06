@@ -1,11 +1,34 @@
-import { useContext } from "react";
-import { CartsContext } from "../contexts/CartContext";
-import type { CartsContextType } from "../interfaces/Cart";
+import { useDispatch, useSelector } from 'react-redux';
+import { type AppDispatch } from '../redux/store';
+import {
+  updateAllCarts,
+  getOrCreateCart,
+  deleteCart,
+  addCartItem,
+  deleteCartItem,
+  updateCartItem,
+  selectCarts,
+  selectCartByUser,
+} from '../redux/slices/cartsSlice';
+import type { Cart, CartItem } from '../interfaces/Cart';
 
-export const useCarts = (): CartsContextType => {
-  const context = useContext(CartsContext);
-  if (!context) {
-    throw new Error("useCarts must be used within a CartsProvider");
-  }
-  return context;
+export const useCarts = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const carts = useSelector(selectCarts);
+
+  return {
+    Carts: carts,
+    getCartByUser: (userId: string): Cart | undefined => {
+      dispatch(getOrCreateCart({ userId }));
+      return useSelector(selectCartByUser(userId));
+    },
+    updateAllCarts: (carts: Cart[]) => dispatch(updateAllCarts(carts)),
+    deleteCart: (id: string) => dispatch(deleteCart(id)),
+    addCartItem: (cartId: string, cartItem: CartItem) =>
+      dispatch(addCartItem({ cartId, cartItem })),
+    deleteCartItem: (cartId: string, cartItemId: string) =>
+      dispatch(deleteCartItem({ cartId, cartItemId })),
+    updateCartItem: (cartId: string, cartItemId: string, updates: Partial<CartItem>) =>
+      dispatch(updateCartItem({ cartId, cartItemId, updates })),
+  };
 };
