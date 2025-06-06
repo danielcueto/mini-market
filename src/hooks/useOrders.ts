@@ -1,11 +1,21 @@
-import { useContext } from "react";
-import { OrdersContext } from "../contexts/OrderContext";
-import type { OrdersContextType } from "../interfaces/Order";
+import { useDispatch, useSelector } from 'react-redux';
+import { type AppDispatch } from '../redux/store';
+import {
+  addOrder,
+  updateAllOrders,
+  selectOrders,
+  selectOrderById,
+} from '../redux/slices/ordersSlice';
+import type { Order } from '../interfaces/Order';
 
-export const useOrders = (): OrdersContextType => {
-  const context = useContext(OrdersContext);
-  if (!context) {
-    throw new Error("useOrders must be used within a OrdersProvider");
-  }
-  return context;
+export const useOrders = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const orders = useSelector(selectOrders);
+
+  return {
+    orders,
+    getOrder: (id: string) => useSelector(selectOrderById(id)),
+    addOrder: (order: Order) => dispatch(addOrder(order)),
+    updateAllOrders: (newOrders: Order[]) => dispatch(updateAllOrders(newOrders)),
+  };
 };

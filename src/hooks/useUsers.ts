@@ -1,11 +1,15 @@
-import { useContext } from "react";
-import { UsersContext } from "../contexts/UserContext";
-import type { UsersContextType } from "../interfaces/User";
+import { useDispatch, useSelector } from 'react-redux';
+import { type AppDispatch } from '../redux/store';
+import { updateAllUsers, selectUsers, selectUserById } from '../redux/slices/usersSlice';
+import type { User } from '../interfaces/User';
 
-export const useUsers = (): UsersContextType => {
-  const context = useContext(UsersContext);
-  if (!context) {
-    throw new Error("useUsers must be used within a UsersProvider");
-  }
-  return context;
+export const useUsers = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const users = useSelector(selectUsers);
+
+  return {
+    users,
+    getUser: (id: string) => useSelector(selectUserById(id)),
+    updateAllUsers: (newUsers: User[]) => dispatch(updateAllUsers(newUsers)),
+  };
 };
