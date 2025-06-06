@@ -7,6 +7,7 @@ export const users: User[] = [
     role: "admin",
     email: "admin1@example.com",
     password: "admin123",
+    isLogged: false,
   },
   {
     id: "admin-2",
@@ -14,6 +15,7 @@ export const users: User[] = [
     role: "admin",
     email: "admin2@example.com",
     password: "admin123",
+    isLogged: false,
   },
   {
     id: "client-1",
@@ -21,6 +23,7 @@ export const users: User[] = [
     role: "client",
     email: "client1@example.com",
     password: "client123",
+    isLogged: false,
   },
   {
     id: "client-2",
@@ -28,6 +31,7 @@ export const users: User[] = [
     role: "client",
     email: "client2@example.com",
     password: "client123",
+    isLogged: false,
   },
   {
     id: "client-3",
@@ -35,5 +39,6 @@ export const users: User[] = [
     role: "client",
     email: "client3@example.com",
     password: "client123",
+    isLogged: false,
   },
 ];
