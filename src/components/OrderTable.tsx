@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaEye } from "react-icons/fa";
-import { OrderDetailsModal } from "./OrderDetailsModal";
+import { OrderDetail } from "./Modal/OrderDetail";
+import Modal from "./ Modal";
 
 interface Order {
   id: number;
@@ -75,7 +76,9 @@ export function OrderTable() {
       </table>
 
       {selectedOrder && (
-        <OrderDetailsModal order={selectedOrder} onClose={() => setSelectedOrder(null)} />
+        <Modal isOpen={true} onClose={() => setSelectedOrder(null)}>
+          <OrderDetail order={selectedOrder} />
+        </Modal>
       )}
     </div>
   );
