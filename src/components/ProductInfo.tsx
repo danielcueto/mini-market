@@ -1,18 +1,32 @@
-export function ProductInfo () {
+import { useState } from "react";
+import type { Product } from "../interfaces/Product";
+
+export function ProductInfo({ product }: { product?: Product }) {
+    const [quantity, setQuantity] = useState(1);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseInt(e.target.value, 10);
+        if (!isNaN(value) && value >= 1) {
+            setQuantity(value);
+        }
+    };
+
     return (
         <div className="flex flex-col gap-5 p-2 pt-5 md:px-20">
             <div className="flex justify-between gap-3 font-semibold">
-                <h1 className="text-xl">Product Title Goes <br /> Here</h1>
-                <span>$20</span>
+                <h1 className="text-xl md:text-2xl lg:text-2xl">{product?.name}</h1>
+                <span className="text-md md:text-xl lg:text-xl">${product?.price}</span>
             </div>
             <hr />
             <div className="flex flex-col items-start gap-2">
                 <label className="font-semibold" htmlFor="">Quantity</label>
-                <select value="" className="px-5 border">
-                     <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
+                <input
+                    type="number"
+                    min={1}
+                    className="border px-4 py-1 w-20"
+                    value={quantity}
+                    onChange={handleChange}
+                />
             </div>
             <hr />
             <div className="flex justify-center">
@@ -20,7 +34,7 @@ export function ProductInfo () {
             </div>
             <hr />
             <article>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                {product?.description}
             </article>
         </div>
     )
