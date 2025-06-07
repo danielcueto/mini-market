@@ -1,31 +1,13 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
+import type { Product } from "../interfaces/Product";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number | string;
-  category: string;
+interface ProductTableProps {
+  products: Product[];
+  onEdit: (product: Product) => void;
+  onDelete: (product: Product) => void;
 }
 
-const products: Product[] = [
-  {
-    id: 1,
-    name: "Giacomo Guilizzoni\nFounder & CEO",
-    price: 36,
-    category: "Peldi",
-  },
-  { id: 2, name: "Marco Botton\nTuttatore", price: 34, category: "Patata" },
-  {
-    id: 3,
-    name: "Mariah Maclachlan\nBetter Half",
-    price: 37,
-    category: "Patata",
-  },
-  { id: 4, name: "Valerie Liberty\nHead Chef", price: 10, category: "Val" },
-  { id: 5, name: "Guido Jack Guilizzoni", price: 6, category: "The Guids" },
-];
-
-export function ProductTable() {
+export function ProductTable({ products, onEdit, onDelete }: ProductTableProps) {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full border border-gray-300 text-xs md:text-sm text-left">
@@ -47,12 +29,8 @@ export function ProductTable() {
               <td className="p-2 border">{prod.category}</td>
               <td className="p-2 border">
                 <div className="flex gap-5 justify-center items-center">
-                  <button className="text-black text-md md:text-lg">
-                    <FaEdit className="cursor-pointer" />
-                  </button>
-                  <button className="text-black text-xs md:text-md">
-                    <FaTrash className="cursor-pointer" />
-                  </button>
+                  <FaEdit onClick={() => onEdit(prod)} className="cursor-pointer text-black text-md md:text-lg" />
+                  <FaTrash onClick={() => onDelete(prod)} className="cursor-pointer text-black text-xs md:text-md" />
                 </div>
               </td>
             </tr>
