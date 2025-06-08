@@ -7,6 +7,9 @@ export const orders: Order[] = [
       userId: carts[0].userId,
       items: carts[0].items,
     },
+    customerName: "client-1",
+    date: new Date(),
+    total: 89.97
   },
   {
     id: "order-2",
@@ -14,5 +17,8 @@ export const orders: Order[] = [
       userId: carts[1].userId,
       items: carts[1].items,
     },
+    customerName: "client-2",
+    date: new Date(),
+    total: 24.99
   },
 ];
