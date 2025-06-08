@@ -2,45 +2,14 @@ import { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { OrderDetail } from "./Modal/OrderDetail";
 import Modal from "./ Modal";
+import type { Order } from "../interfaces/Order";
+import { formatDate } from "../utils/formatDate";
 
-interface Order {
-  id: number;
-  customer: string;
-  date: string;
-  total: number;
-  items: {
-    product: string;
-    quantity: number;
-    price: number;
-  }[];
+interface OrderTableProps {
+  orders: Order[];
 }
 
-const orders: Order[] = [
-  {
-    id: 1001,
-    customer: "Juan Pérez",
-    date: "2025-06-01",
-    total: 120,
-    items: [
-      { product: "Coca Cola", quantity: 2, price: 30 },
-      { product: "Sprite", quantity: 3, price: 20 },
-      { product: "Sprite", quantity: 3, price: 20 },
-      { product: "Sprite", quantity: 3, price: 20 },
-
-    ],
-  },
-  {
-    id: 1002,
-    customer: "Ana García",
-    date: "2025-06-03",
-    total: 75,
-    items: [
-      { product: "Pepsi", quantity: 5, price: 15 },
-    ],
-  },
-];
-
-export function OrderTable() {
+export function OrderTable({ orders }: OrderTableProps) {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   return (
@@ -59,8 +28,8 @@ export function OrderTable() {
           {orders.map(order => (
             <tr key={order.id} className="even:bg-gray-50">
               <td className="p-2 border">{order.id}</td>
-              <td className="p-2 border">{order.customer}</td>
-              <td className="p-2 border">{order.date}</td>
+              <td className="p-2 border">{order.customerName}</td>
+              <td className="p-2 border">{formatDate(order.date)}</td>
               <td className="p-2 border">${order.total}</td>
               <td className="p-2 border">
                 <button
