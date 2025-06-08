@@ -8,7 +8,7 @@ export const orders: Order[] = [
       items: carts[0].items,
     },
     customerName: "client-1",
-    date: new Date(),
+    date: Date.now(),
     total: 89.97
   },
   {
@@ -18,7 +18,7 @@ export const orders: Order[] = [
       items: carts[1].items,
     },
     customerName: "client-2",
-    date: new Date(),
+    date: Date.now(),
     total: 24.99
   },
 ];
