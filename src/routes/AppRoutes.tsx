@@ -16,7 +16,7 @@ export function AppRoutes() {
                <Route index element={<HomePage/>}/>
                <Route path="/product/:id" element={<ProductDetail/>}/>
                <Route path="/cart" element={<Cart/>}/>
-               <Route path="/checkout" element={<Checkout/>}/>
+               <Route path="/checkout/:id" element={<Checkout/>}/>
                <Route path="/admin" element={<Dashboard/>} />
                <Route path="admin/order-management" element={<OrderManagement/>} />
             </Route>

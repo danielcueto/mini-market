@@ -8,7 +8,6 @@ import {
   deleteCartItem,
   updateCartItem,
   selectCarts,
-  selectCartByUser,
 } from '../redux/slices/cartsSlice';
 import type { Cart, CartItem } from '../interfaces/Cart';
 
@@ -16,12 +15,14 @@ export const useCarts = () => {
   const dispatch = useDispatch<AppDispatch>();
   const carts = useSelector(selectCarts);
 
+  const getCartByUser = (userId: string): Cart | undefined => {
+    return carts.find(cart => cart.userId === userId);
+  };
+
   return {
     Carts: carts,
-    getCartByUser: (userId: string): Cart | undefined => {
-      dispatch(getOrCreateCart({ userId }));
-      return useSelector(selectCartByUser(userId));
-    },
+    getCartByUser,
+    createCartIfNotExists: (userId: string) => dispatch(getOrCreateCart({ userId })),
     updateAllCarts: (carts: Cart[]) => dispatch(updateAllCarts(carts)),
     deleteCart: (id: string) => dispatch(deleteCart(id)),
     addCartItem: (cartId: string, cartItem: CartItem) =>

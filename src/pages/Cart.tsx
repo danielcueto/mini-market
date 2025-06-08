@@ -1,74 +1,72 @@
-import { useMemo, useState } from "react";
-import { FaTrashAlt } from "react-icons/fa";
+import { useEffect, useMemo, useState } from "react";
 import { Summary } from "../components/Summary";
-
-interface Product {
-  id: number;
-  image: string;
-  description: string;
-  price: number;
-  quantity: number;
-}
-
-const products: Product[] = [
-  {
-    id: 1,
-    image:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png", // Bulbasaur
-    description:
-      "Bulbasaur: una planta portátil con energía solar incorporada. Ideal para quienes valoran la sostenibilidad con estilo natural.",
-    price: 19.99,
-    quantity: 100,
-  },
-  {
-    id: 2,
-    image:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png", // Charmander
-    description:
-      "Charmander: llama viva de compañía. Perfecto para climas fríos o para encender cualquier aventura con calidez.",
-    price: 29.99,
-    quantity: 50,
-  },
-  {
-    id: 3,
-    image:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png", // Squirtle
-    description:
-      "Squirtle: solución portátil de hidratación y defensa. Ideal para quienes buscan protección acuática en cualquier situación.",
-    price: 39.99,
-    quantity: 75,
-  },
-  {
-    id: 4,
-    image:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png", // Pikachu
-    description:
-      "Pikachu: fuente de energía eléctrica móvil con diseño adorable. Tecnología portátil con encanto y potencia.",
-    price: 49.99,
-    quantity: 20,
-  },
-  {
-    id: 5,
-    image:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png", // Eevee
-    description:
-      "Eevee: el compañero multifuncional que se adapta a tus necesidades. Evoluciona contigo según tu estilo de vida.",
-    price: 59.99,
-    quantity: 10,
-  },
-];
+import { useCarts } from "../hooks/useCarts";
+import { useAuth } from "../hooks/useAuth";
+import { type Cart, type CartItem } from "../interfaces/Cart";
+import { CartRow } from "../components/CartRow";
+import { useNavigate } from "react-router";
+import Modal from "../components/ Modal";
+import { ConfirmOrder } from "../components/Modal/ConfirmOrder";
+import type { Order } from "../interfaces/Order";
+import { useOrders } from "../hooks/useOrders";
 
 export function Cart() {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { currentUser } = useAuth();
+  const { addOrder } = useOrders();
+  const {
+    getCartByUser,
+    createCartIfNotExists,
+    updateCartItem,
+    deleteCartItem,
+    deleteCart,
+  } = useCarts();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser) createCartIfNotExists(currentUser!.id);
+  }, [currentUser]);
+  const cart = getCartByUser(currentUser!.id);
+
   const subtotal: number = useMemo((): number => {
     let productsSubtotal = 0;
-    products.map((product: Product) => {
-      productsSubtotal += product.price;
+    cart?.items.map((cartItem: CartItem) => {
+      productsSubtotal += cartItem.product.price * cartItem.quantity;
     });
     const numberRounded = Math.round(productsSubtotal * 100) / 100;
     return numberRounded;
-  }, [products]);
+  }, [cart]);
 
-  const onClickRemoveItem = () => {};
+  const onChangeQuantity = (cartItemId: string, quantity: number) => {
+    if (cart)
+      updateCartItem(cart!.id, cartItemId, {
+        quantity: quantity,
+      });
+  };
+
+  const onClickRemoveItem = (cartItemId: string) => {
+    if (cart) deleteCartItem(cart!.id, cartItemId);
+  };
+
+  const onConfirmOrder = () => {
+    if (!cart || !cart?.items || !cart?.items.length) return;
+    const orderId = crypto.randomUUID();
+    const order: Order = {
+      cart: {
+        items: [...cart!.items],
+        userId: currentUser!.id,
+      },
+      id: orderId,
+      customerName: currentUser!.username,
+      date: Date.now(),
+      total: subtotal,
+    };
+
+    addOrder(order);
+    deleteCart(cart.id);
+
+    if (cart && cart.items.length) navigate(`/checkout/${orderId}`);
+  };
 
   return (
     <div className="w-full flex justify-center">
@@ -83,32 +81,22 @@ export function Cart() {
               <div className="font-bold text-center">Action</div>
             </div>
             <div className="border-t-[1px] overflow-y-scroll max-h-[200px] md:max-h-[600px]">
-              {products &&
-                products.map((product: Product) => (
-                  <div
-                    key={product.id}
-                    className="grid grid-cols-4 border-b-[1px] p-2 items-center"
-                  >
-                    <div className="flex flex-col items-center">
-                      <img src={product.image} alt="None" />
-                      <p className="md:text-base text-xs">{product.description}</p>
-                    </div>
-                    <div className="flex flex-col justify-center items-center">
-                      {product.price}
-                    </div>
-                    <input className="flex flex-col justify-center items-center h-1/4 text-center"
-                      value={product.quantity}
-                      min={0}
-                    />
-                    
-                    <div className="flex flex-col justify-center items-center">
-                      <button onClick={onClickRemoveItem} type="button">
-                        <FaTrashAlt />
-                      </button>
-                    </div>
-                  </div>
+              {cart &&
+                cart.items.map((cartItem: CartItem) => (
+                  <CartRow
+                    key={cartItem.id}
+                    id={cartItem.id}
+                    description={cartItem.product.description}
+                    image={cartItem.product.image}
+                    onChangeQuantity={onChangeQuantity}
+                    onClickRemoveItem={onClickRemoveItem}
+                    price={cartItem.product.price}
+                    quantity={cartItem.quantity}
+                  />
                 ))}
-              {!products && <p>There are no products</p>}
+              {(!cart?.items || !cart?.items.length) && (
+                <p>There are no products</p>
+              )}
             </div>
             <div className="text-end border-b-[1px] yrc">
               Subtotal: {subtotal}$
@@ -120,10 +108,18 @@ export function Cart() {
             <button
               className="border-[1px] w-full text-white font-bold bg-gray-400 p-2"
               type="button"
+              disabled={!cart?.items?.length}
+              onClick={() => setIsModalOpen(true)}
             >
               Checkout
             </button>
           </Summary>
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <ConfirmOrder
+              onConfirmOrder={onConfirmOrder}
+              onClose={() => setIsModalOpen(false)}
+            />
+          </Modal>
         </section>
       </div>
     </div>

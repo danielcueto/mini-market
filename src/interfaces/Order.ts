@@ -5,5 +5,5 @@ export interface Order {
     cart: Pick<Cart, "items" | "userId">;
     total: number;
     customerName: string;
-    date: Date
+    date: number
 };
