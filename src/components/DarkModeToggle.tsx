@@ -29,9 +29,9 @@ export function DarkModeToggle() {
       aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
     >
       {isDark ? (
-        <FaSun className="w-5 h-5 text-[#C6FF00]" />
+        <FaSun className="w-5 h-5 dark:text-[#C6FF00] text-[#769700]" />
       ) : (
-        <FaMoon className="w-5 h-5 text-[#C6FF00]" />
+        <FaMoon className="w-5 h-5 dark:text-[#C6FF00] text-[#769700]" />
       )}
     </button>
   );

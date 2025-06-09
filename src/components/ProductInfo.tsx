@@ -68,13 +68,13 @@ export function ProductInfo({ product }: ProductInfoProps) {
         <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
           {product?.name}
         </h1>
-        <span className="text-2xl lg:text-3xl font-bold text-[#C6FF00]">
+        <span className="text-2xl lg:text-3xl font-bold dark:text-[#C6FF00] text-[#769700]">
           ${product?.price?.toFixed(2)}
         </span>
       </div>
 
       {product?.category && (
-        <div className="inline-flex px-3 py-1 text-sm font-medium bg-[#C6FF00]/10 dark:bg-[#C6FF00]/20 text-[#C6FF00] border border-[#C6FF00]/30 rounded-full">
+        <div className="inline-flex px-3 py-1 text-sm font-medium bg-[#C6FF00]/10 dark:bg-[#C6FF00]/20 dark:text-[#C6FF00] text-[#769700] border border-[#C6FF00]/30 rounded-full">
           {product.category}
         </div>
       )}
@@ -104,7 +104,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 id="quantity"
                 type="number"
                 min={1}
-                className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#C6FF00] focus:border-[#C6FF00] transition-colors"
+                className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#769700] dark:focus:ring-[#C6FF00] focus:border-[#769700] dark:focus:border-[#C6FF00] transition-colors"
                 value={quantity}
                 onChange={handleChange}
               />

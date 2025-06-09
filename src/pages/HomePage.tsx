@@ -129,7 +129,7 @@ export function HomePage() {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#C6FF00] focus:border-[#C6FF00] transition-colors"
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#769700] dark:focus:ring-[#C6FF00] focus:border-[#769700] dark:focus:border-[#C6FF00] transition-colors"
               placeholder="Search products..."
             />
           </div>
@@ -176,7 +176,7 @@ export function HomePage() {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#C6FF00] focus:border-[#C6FF00] transition-colors"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#769700] dark:focus:ring-[#C6FF00] focus:border-[#769700] dark:focus:border-[#C6FF00] transition-colors"
                   placeholder="Search products..."
                 />
               </div>
@@ -197,7 +197,7 @@ export function HomePage() {
                         type="checkbox"
                         checked={selectedCategories.includes(category)}
                         onChange={() => handleCategoryChange(category)}
-                        className="rounded border-gray-300 text-[#C6FF00] focus:ring-[#C6FF00]"
+                        className="rounded border-gray-300 dark:text-[#C6FF00] text-[#769700] focus:ring-[#769700] dark:focus:ring-[#C6FF00]"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300 capitalize">
                         {category}
@@ -229,7 +229,7 @@ export function HomePage() {
                         type="checkbox"
                         checked={selectedPriceRanges.includes(range)}
                         onChange={() => handlePriceRangeChange(range)}
-                        className="rounded border-gray-300 text-[#C6FF00] focus:ring-[#C6FF00]"
+                        className="rounded border-gray-300 dark:text-[#C6FF00] text-[#769700] focus:ring-[#769700] dark:focus:ring-[#769700] dark:focus:ring-[#C6FF00]"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">
                         {range}
@@ -255,7 +255,7 @@ export function HomePage() {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
                 Products
-                <span className="text-[#C6FF00]">
+                <span className="dark:text-[#C6FF00] text-[#769700]">
                   ({filteredProducts.length})
                 </span>
               </h2>
@@ -280,7 +280,7 @@ export function HomePage() {
                         <h3 className="font-semibold text-sm mb-2 line-clamp-2 h-10 text-gray-900 dark:text-white">
                           {product.name}
                         </h3>
-                        <p className="text-xl font-bold text-[#C6FF00] mb-3">
+                        <p className="text-xl font-bold dark:dark:text-[#C6FF00] text-[#769700] mb-3">
                           ${product.price.toFixed(2)}
                         </p>
                       </div>

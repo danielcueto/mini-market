@@ -45,13 +45,13 @@ export function ProductTable({
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-[#C6FF00] font-semibold">
+                  <div className="text-sm dark:text-[#C6FF00] text-[#769700] font-semibold">
                     ${prod.price.toFixed(2)}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   
-                  <span className="inline-flex px-2 py-1 text-xs font-medium bg-[#C6FF00]/10 dark:bg-[#C6FF00]/20 text-[#C6FF00] border border-[#C6FF00]/30 rounded-full">
+                  <span className="inline-flex px-2 py-1 text-xs font-medium bg-[#C6FF00]/10 dark:bg-[#C6FF00]/20 dark:text-[#C6FF00] text-[#769700] border border-[#C6FF00]/30 rounded-full">
                     {prod.category}
                   </span>
                 </td>
@@ -122,7 +122,7 @@ export function ProductTable({
               />
             </svg>
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              No hay <span className="text-[#C6FF00]">productos</span>
+              No hay <span className="dark:text-[#C6FF00] text-[#769700]">productos</span>
             </h3>
             <p className="text-gray-500 dark:text-gray-400">
               Comienza creando tu primer producto.
