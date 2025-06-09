@@ -5,17 +5,36 @@ export function RelatedProduct() {
   const { products } = useProducts();
 
   return (
-    <div className="mt-8">
-      <hr />
-      <h3 className="text-lg font-semibold mt-2 mb-4">Related Products</h3>
-      <div className="flex gap-10 md:gap-20 overflow-x-auto max-w-full pb-2">
-        {products.map((product) => (
-          <div
-            className="min-w-[96px] sm:min-w-[120px] md:min-w-[140px] h-24 sm:h-28 md:h-32 overflow-hidden">
-            <Link to={`/product/${product.id}`}>
-              <img src={product.image} alt={product.name} className="w-full h-full object-fit" />
-            </Link>
-          </div>
+    <div className="space-y-6">
+      
+      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+        <span className="text-[#C6FF00]">Productos</span> relacionados
+      </h3>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {products.slice(0, 6).map((product) => (
+          <Link
+            key={product.id}
+            to={`/product/${product.id}`}
+            className="group"
+          >
+            
+            <div className="aspect-square bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden hover:ring-2 hover:ring-[#C6FF00] transition-all duration-200">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                loading="lazy"
+              />
+            </div>
+            <div className="mt-2 text-center">
+              <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                {product.name}
+              </p>
+              <p className="text-sm text-[#C6FF00] font-semibold">
+                ${product.price.toFixed(2)}
+              </p>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
