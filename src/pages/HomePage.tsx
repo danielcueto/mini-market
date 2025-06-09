@@ -1,40 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaFilter, FaTimes, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { Button } from "../components/ui/Button";
 import { Card, CardContent, CardFooter } from "../components/ui/Card";
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-  category: string;
-}
+import { useProducts } from "../hooks/useProducts";
+import { useCarts } from "../hooks/useCarts";
+import { useAuth } from "../hooks/useAuth";
+import type { Product } from "../interfaces/Product";
+import type { CartItem } from "../interfaces/Cart";
 
 export function HomePage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { products } = useProducts();
+  const { getCartByUser, addCartItem, createCartIfNotExists, updateCartItem } =
+    useCarts();
+  const { currentUser, isAuthenticated } = useAuth();
   const [showFilters, setShowFilters] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]);
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch("https://fakestoreapi.com/products");
-      const data = await response.json();
-      setProducts(data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleCategoryChange = (category: string) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
@@ -55,8 +39,47 @@ export function HomePage() {
     setSearchTerm("");
   };
 
+  const handleProductClick = (productId: string) => {
+    navigate(`/product/${productId}`);
+  };
+  const handleAddToCart = (product: Product) => {
+    if (!isAuthenticated || !currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    let cart = getCartByUser(currentUser.id);
+    if (!cart) {
+      createCartIfNotExists(currentUser.id);
+      cart = getCartByUser(currentUser.id);
+    }
+
+    const existingItem = cart!.items.find(
+      (item) => item.product.name === product.name
+    );
+
+    if (existingItem) {
+      const updatedItem = {
+        ...existingItem,
+        quantity: existingItem.quantity + 1,
+      };
+      updateCartItem(cart!.id, existingItem.id, updatedItem);
+    } else {
+      const newCartItem: CartItem = {
+        id: crypto.randomUUID(),
+        product: {
+          image: product.image,
+          name: product.name,
+          description: product.description,
+          price: product.price,
+        },
+        quantity: 1,
+      };
+      addCartItem(cart!.id, newCartItem);
+    }
+  };
   const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.title
+    const matchesSearch = product.name
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesCategory =
@@ -218,69 +241,64 @@ export function HomePage() {
                 </Button>
               </CardFooter>
             </Card>
-          </aside>
-
+          </aside>{" "}
           {/* Products Grid */}
           <section className="lg:col-span-3">
-            {loading ? (
-              <div className="flex justify-center items-center h-64">
-                <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#C6FF00] border-t-transparent"></div>
-                <span className="ml-3 text-gray-500 dark:text-gray-400">
-                  Loading products...
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                Products
+                <span className="text-[#C6FF00]">
+                  ({filteredProducts.length})
                 </span>
+              </h2>
+            </div>{" "}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {filteredProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="cursor-pointer"
+                  onClick={() => handleProductClick(product.id)}
+                >
+                  <Card className="group hover:shadow-lg transition-shadow duration-300">
+                    <CardContent className="p-0">
+                      <div className="aspect-square overflow-hidden rounded-t-lg bg-gray-50 dark:bg-gray-800">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-sm mb-2 line-clamp-2 h-10 text-gray-900 dark:text-white">
+                          {product.name}
+                        </h3>
+                        <p className="text-xl font-bold text-[#C6FF00] mb-3">
+                          ${product.price.toFixed(2)}
+                        </p>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button
+                        className="w-full"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAddToCart(product);
+                        }}
+                      >
+                        <FaShoppingCart className="w-4 h-4 mr-2" />
+                        Add to Cart
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </div>
+              ))}
+            </div>
+            {filteredProducts.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-gray-500 dark:text-gray-400 text-lg">
+                  No products found matching your criteria.
+                </p>
               </div>
-            ) : (
-              <>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
-                    Products
-                    <span className="text-[#C6FF00]">
-                      ({filteredProducts.length})
-                    </span>
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {filteredProducts.map((product) => (
-                    <Card
-                      key={product.id}
-                      className="group hover:shadow-lg transition-shadow duration-300"
-                    >
-                      <CardContent className="p-0">
-                        <div className="aspect-square overflow-hidden rounded-t-lg bg-gray-50 dark:bg-gray-800">
-                          <img
-                            src={product.image}
-                            alt={product.title}
-                            className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
-                        <div className="p-4">
-                          <h3 className="font-semibold text-sm mb-2 line-clamp-2 h-10 text-gray-900 dark:text-white">
-                            {product.title}
-                          </h3>
-                          <p className="text-xl font-bold text-[#C6FF00] mb-3">
-                            ${product.price.toFixed(2)}
-                          </p>
-                        </div>
-                      </CardContent>
-                      <CardFooter>
-                        <Button className="w-full">
-                          <FaShoppingCart className="w-4 h-4 mr-2" />
-                          Add to Cart
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-
-                {filteredProducts.length === 0 && !loading && (
-                  <div className="text-center py-12">
-                    <p className="text-gray-500 dark:text-gray-400 text-lg">
-                      No products found matching your criteria.
-                    </p>
-                  </div>
-                )}
-              </>
             )}
           </section>
         </div>

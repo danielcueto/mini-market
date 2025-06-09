@@ -101,10 +101,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
               variant="primary"
               size="lg"
               className="w-full flex items-center justify-center gap-2"
-              onClick={() => {
-                alert("Producto agregado al carrito");
-                handleAddToCart();
-              }}
+              onClick={() =>handleAddToCart()}
             >
               <svg
                 className="w-5 h-5"
