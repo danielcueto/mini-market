@@ -6,6 +6,7 @@ import type { Product } from "../interfaces/Product";
 import { Button } from "./ui/Button";
 import { Card, CardContent } from "./ui/Card";
 import { NotificationContext } from "../context/NotificationContext";
+import { useNavigate } from "react-router";
 
 interface ProductInfoProps {
     product?: Product;
@@ -13,9 +14,10 @@ interface ProductInfoProps {
 
 export function ProductInfo({ product }: ProductInfoProps) {
     const { getCartByUser, addCartItem, createCartIfNotExists, updateCartItem } = useCarts();
-    const { currentUser } = useAuth();
+    const { currentUser, isAuthenticated } = useAuth();
     const [quantity, setQuantity] = useState(1);
     const context = useContext(NotificationContext);
+    const navigate = useNavigate();
 
     if (!context) return null;
 
@@ -33,6 +35,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
   };
 
      const handleAddToCart = () => {
+        if (!isAuthenticated || !currentUser) {
+          navigate("/login");
+          return;
+        }
         let cart = getCartByUser(currentUser!.id);
         const existingItem = cart!.items.find(item => item.product.name === product!.name);
 
