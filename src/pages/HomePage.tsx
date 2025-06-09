@@ -144,7 +144,7 @@ export function HomePage() {
                         h-full lg:h-auto
                         bg-white dark:bg-gray-800 lg:bg-transparent
                         p-6 lg:p-0
-                        z-40 lg:z-auto
+                        z-50 lg:z-auto
                         overflow-y-auto lg:overflow-visible
                     `}
           >
