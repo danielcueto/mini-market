@@ -1,7 +1,16 @@
 import { useState } from "react";
+import { useCarts } from "../hooks/useCarts";
+import { useAuth } from "../hooks/useAuth";
+import type { CartItem } from "../interfaces/Cart";
 import type { Product } from "../interfaces/Product";
 
-export function ProductInfo({ product }: { product?: Product }) {
+interface ProductInfoProps {
+    product?: Product;
+}
+
+export function ProductInfo({ product }: ProductInfoProps) {
+    const { getCartByUser, addCartItem, createCartIfNotExists, updateCartItem } = useCarts();
+    const { currentUser } = useAuth();
     const [quantity, setQuantity] = useState(1);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -9,6 +18,32 @@ export function ProductInfo({ product }: { product?: Product }) {
         if (!isNaN(value) && value >= 1) {
             setQuantity(value);
         }
+    };
+
+    const handleAddToCart = () => {
+        let cart = getCartByUser(currentUser!.id);
+        if (!cart) {
+            createCartIfNotExists(currentUser!.id);
+            cart = getCartByUser(currentUser!.id);
+        }
+
+        const existingItem = cart!.items.find(item => item.product.name === product!.name);
+
+        if (existingItem) {
+            const updatedItem = {
+                ...existingItem,
+                quantity: existingItem.quantity + quantity,
+            };
+            updateCartItem(cart!.id, existingItem.id, updatedItem);
+        } else {
+            const newCartItem: CartItem = {
+                id: crypto.randomUUID(),
+                product: product!,
+                quantity: quantity,
+            };
+            addCartItem(cart!.id, newCartItem);
+        }
+        setQuantity(1);
     };
 
     return (
@@ -30,7 +65,7 @@ export function ProductInfo({ product }: { product?: Product }) {
             </div>
             <hr />
             <div className="flex justify-center">
-                <button className="w-full border-2 cursor-pointer">Add To Cart</button>
+                <button onClick={handleAddToCart} className="w-full border-2 hover:bg-gray-100 cursor-pointer">Add To Cart</button>
             </div>
             <hr />
             <article>
