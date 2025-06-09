@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { useProducts } from "../../hooks/useProducts";
 import type { Product } from "../../interfaces/Product";
 import { Button } from "../ui/Button";
+import { NotificationContext } from "../../context/NotificationContext";
 
 interface ConfirmDeleteProps {
   product: Product | null;
@@ -9,10 +11,16 @@ interface ConfirmDeleteProps {
 
 export function ConfirmDeleteProduct({ product, onClose }: ConfirmDeleteProps) {
   const { deleteProduct } = useProducts();
+  const context = useContext(NotificationContext);
+
+  if (!context) return null;
+
+  const { showNotification } = context;
 
   if (!product) return null;
   const handleDeleteProduct = () => {
     deleteProduct(product.id);
+    showNotification("Delete product succesfull", "success");
     onClose();
   };
 

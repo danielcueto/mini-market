@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useCarts } from "../hooks/useCarts";
 import { useAuth } from "../hooks/useAuth";
 import type { CartItem } from "../interfaces/Cart";
 import type { Product } from "../interfaces/Product";
 import { Button } from "./ui/Button";
 import { Card, CardContent } from "./ui/Card";
+import { NotificationContext } from "../context/NotificationContext";
 
 interface ProductInfoProps {
     product?: Product;
@@ -14,6 +15,11 @@ export function ProductInfo({ product }: ProductInfoProps) {
     const { getCartByUser, addCartItem, createCartIfNotExists, updateCartItem } = useCarts();
     const { currentUser } = useAuth();
     const [quantity, setQuantity] = useState(1);
+    const context = useContext(NotificationContext);
+
+    if (!context) return null;
+
+    const { showNotification } = context;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -37,6 +43,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 quantity: existingItem.quantity + quantity,
             };
             updateCartItem(cart!.id, existingItem.id, updatedItem);
+            showNotification("Update quantity product to cart succesfull", "success");
         } else {
             const newCartItem: CartItem = {
                 id: crypto.randomUUID(),
@@ -44,6 +51,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 quantity: quantity,
             };
             addCartItem(cart!.id, newCartItem);
+            showNotification("Add product to cart succesfull", "success");
         }
         setQuantity(1);
     };

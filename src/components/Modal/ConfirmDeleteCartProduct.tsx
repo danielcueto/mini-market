@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { Button } from "../ui/Button";
+import { NotificationContext } from "../../context/NotificationContext";
 
 interface ConfirmDeleteCartProductProps {
   deleteCartItem: () => void;
@@ -9,8 +11,15 @@ export function ConfirmDeleteCartProduct({
   deleteCartItem,
   onClose,
 }: ConfirmDeleteCartProductProps) {
+  const context = useContext(NotificationContext);
+  
+  if (!context) return null;
+  
+  const { showNotification } = context;
+
   const handleDeleteProduct = () => {
     deleteCartItem();
+    showNotification("Delete product of cart succesfull", "success");
     onClose();
   };
 
