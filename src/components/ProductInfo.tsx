@@ -3,6 +3,8 @@ import { useCarts } from "../hooks/useCarts";
 import { useAuth } from "../hooks/useAuth";
 import type { CartItem } from "../interfaces/Cart";
 import type { Product } from "../interfaces/Product";
+import { Button } from "./ui/Button";
+import { Card, CardContent } from "./ui/Card";
 
 interface ProductInfoProps {
     product?: Product;
@@ -13,14 +15,14 @@ export function ProductInfo({ product }: ProductInfoProps) {
     const { currentUser } = useAuth();
     const [quantity, setQuantity] = useState(1);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseInt(e.target.value, 10);
-        if (!isNaN(value) && value >= 1) {
-            setQuantity(value);
-        }
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value >= 1) {
+      setQuantity(value);
+    }
+  };
 
-    const handleAddToCart = () => {
+     const handleAddToCart = () => {
         let cart = getCartByUser(currentUser!.id);
         if (!cart) {
             createCartIfNotExists(currentUser!.id);
@@ -46,31 +48,79 @@ export function ProductInfo({ product }: ProductInfoProps) {
         setQuantity(1);
     };
 
-    return (
-        <div className="flex flex-col gap-5 p-2 pt-5 md:px-20">
-            <div className="flex justify-between gap-3 font-semibold">
-                <h1 className="text-xl md:text-2xl lg:text-2xl">{product?.name}</h1>
-                <span className="text-md md:text-xl lg:text-xl">${product?.price}</span>
-            </div>
-            <hr />
-            <div className="flex flex-col items-start gap-2">
-                <label className="font-semibold" htmlFor="">Quantity</label>
-                <input
-                    type="number"
-                    min={1}
-                    className="border px-4 py-1 w-20"
-                    value={quantity}
-                    onChange={handleChange}
-                />
-            </div>
-            <hr />
-            <div className="flex justify-center">
-                <button onClick={handleAddToCart} className="w-full border-2 hover:bg-gray-100 cursor-pointer">Add To Cart</button>
-            </div>
-            <hr />
-            <article>
-                {product?.description}
-            </article>
+  return (
+    <div className="space-y-6">
+ 
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
+          {product?.name}
+        </h1>
+        <span className="text-2xl lg:text-3xl font-bold text-[#C6FF00]">
+          ${product?.price?.toFixed(2)}
+        </span>
+      </div>
+
+      {product?.category && (
+        <div className="inline-flex px-3 py-1 text-sm font-medium bg-[#C6FF00]/10 dark:bg-[#C6FF00]/20 text-[#C6FF00] border border-[#C6FF00]/30 rounded-full">
+          {product.category}
         </div>
-    )
+      )}
+
+      <Card>
+        <CardContent>
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+            Descripción
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+            {product?.description}
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardContent>
+          <div className="space-y-4">
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-900 dark:text-white mb-2"
+                htmlFor="quantity"
+              >
+                Cantidad
+              </label>
+              <input
+                id="quantity"
+                type="number"
+                min={1}
+                className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#C6FF00] focus:border-[#C6FF00] transition-colors"
+                value={quantity}
+                onChange={handleChange}
+              />
+            </div>
+
+            <Button
+              variant="primary"
+              size="lg"
+              className="w-full flex items-center justify-center gap-2"
+              onClick={() =>handleAddToCart()}
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"
+                />
+              </svg>
+              Agregar al carrito
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }

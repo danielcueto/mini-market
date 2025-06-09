@@ -5,15 +5,18 @@ import { useAuth } from "../hooks/useAuth";
 import { type Cart, type CartItem } from "../interfaces/Cart";
 import { CartRow } from "../components/CartRow";
 import { useNavigate } from "react-router";
-import Modal from "../components/ Modal";
+import Modal from "../components/Modal";
 import { ConfirmOrder } from "../components/Modal/ConfirmOrder";
 import type { Order } from "../interfaces/Order";
 import { useOrders } from "../hooks/useOrders";
+import { Button } from "../components/ui/Button";
+import { Card, CardContent, CardHeader } from "../components/ui/Card";
 
 export function Cart() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { currentUser } = useAuth();
   const { addOrder } = useOrders();
+
   const {
     getCartByUser,
     createCartIfNotExists,
@@ -21,11 +24,11 @@ export function Cart() {
     deleteCartItem,
     deleteCart,
   } = useCarts();
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   useEffect(() => {
     if (!currentUser) createCartIfNotExists(currentUser!.id);
-  }, [currentUser]);
+  }, [currentUser, createCartIfNotExists]);
   const cart = getCartByUser(currentUser!.id);
 
   const subtotal: number = useMemo((): number => {
@@ -69,58 +72,95 @@ export function Cart() {
   };
 
   return (
-    <div className="w-full flex justify-center">
-      <div className="min-w-[320px] flex flex-col-reverse gap-2 p-3 md:grid md:grid-cols-[1fr_30%] md:gap-3 md:justify-items-center w-full">
-        <section className="w-full">
-          <h1 className="font-bold">My Cart</h1>
-          <div className="flex flex-col gap-3">
-            <div className="grid grid-cols-4 border-t-[1px] p-1">
-              <div className="font-bold text-center">Item</div>
-              <div className="font-bold text-center">Price</div>
-              <div className="font-bold text-center">Quantity</div>
-              <div className="font-bold text-center">Action</div>
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <section className="lg:col-span-2">
+            <Card>
+              <CardHeader>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  My <span className="text-[#C6FF00]">Cart</span>
+                </h1>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-4 gap-4 p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-lg mb-4">
+                  <div className="font-semibold text-sm text-gray-900 dark:text-white text-center">
+                    Item
+                  </div>
+                  <div className="font-semibold text-sm text-gray-900 dark:text-white text-center">
+                    Price
+                  </div>
+                  <div className="font-semibold text-sm text-gray-900 dark:text-white text-center">
+                    Quantity
+                  </div>
+                  <div className="font-semibold text-sm text-gray-900 dark:text-white text-center">
+                    Action
+                  </div>
+                </div>
+
+                <div className="space-y-3 max-h-[400px] lg:max-h-[600px] overflow-y-auto">
+                  {cart &&
+                    cart.items.map((cartItem: CartItem) => (
+                      <CartRow
+                        key={cartItem.id}
+                        id={cartItem.id}
+                        description={cartItem.product.description}
+                        image={cartItem.product.image}
+                        onChangeQuantity={onChangeQuantity}
+                        onClickRemoveItem={onClickRemoveItem}
+                        price={cartItem.product.price}
+                        quantity={cartItem.quantity}
+                      />
+                    ))}
+
+                  {(!cart?.items || !cart?.items.length) && (
+                    <div className="text-center py-12">
+                      <p className="text-gray-600 dark:text-gray-400 text-lg">
+                        Your cart is empty
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {cart?.items && cart.items.length > 0 && (
+                  <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700 mt-4">
+                    <div className="text-right">
+                      <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                        Subtotal:
+                        <span className="text-[#C6FF00] font-bold">
+                          ${subtotal}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </section>
+
+          <section className="lg:col-span-1">
+            <div className="sticky top-8">
+              <Summary subtotal={subtotal}>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="w-full"
+                  disabled={!cart?.items?.length}
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Checkout
+                </Button>
+              </Summary>
             </div>
-            <div className="border-t-[1px] overflow-y-scroll max-h-[200px] md:max-h-[600px]">
-              {cart &&
-                cart.items.map((cartItem: CartItem) => (
-                  <CartRow
-                    key={cartItem.id}
-                    id={cartItem.id}
-                    description={cartItem.product.description}
-                    image={cartItem.product.image}
-                    onChangeQuantity={onChangeQuantity}
-                    onClickRemoveItem={onClickRemoveItem}
-                    price={cartItem.product.price}
-                    quantity={cartItem.quantity}
-                  />
-                ))}
-              {(!cart?.items || !cart?.items.length) && (
-                <p>There are no products</p>
-              )}
-            </div>
-            <div className="text-end border-b-[1px] yrc">
-              Subtotal: {subtotal}$
-            </div>
-          </div>
-        </section>
-        <section className="flex flex-col gap-3 w-full mb-3">
-          <Summary subtotal={subtotal}>
-            <button
-              className="border-[1px] w-full text-white font-bold bg-gray-400 p-2"
-              type="button"
-              disabled={!cart?.items?.length}
-              onClick={() => setIsModalOpen(true)}
-            >
-              Checkout
-            </button>
-          </Summary>
-          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <ConfirmOrder
-              onConfirmOrder={onConfirmOrder}
-              onClose={() => setIsModalOpen(false)}
-            />
-          </Modal>
-        </section>
+          </section>
+        </div>
+
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <ConfirmOrder
+            onConfirmOrder={onConfirmOrder}
+            onClose={() => setIsModalOpen(false)}
+          />
+        </Modal>
       </div>
     </div>
   );

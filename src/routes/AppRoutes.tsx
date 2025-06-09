@@ -9,29 +9,38 @@ import { Login } from "../pages/Login";
 import { Checkout } from "../pages/Checkout";
 import { useAuth } from "../hooks/useAuth";
 
-
 export function AppRoutes() {
-    const { isAuthenticated, currentUser } = useAuth();
+  const { isAuthenticated, currentUser } = useAuth();
 
-    return (
-        <Routes>
-            <Route element={<Layout/>}>
-               <Route index element={<HomePage/>}/>
-               <Route path="/product/:id" element={<ProductDetail/>}/>
-               <Route path="/cart" element={<Cart/>}/>
-               <Route path="/checkout/:id" element={<Checkout/>}/>
-               <Route path="/admin" element={
-                   isAuthenticated && currentUser?.role === 'admin' ? 
-                   <Dashboard/> : 
-                   <Navigate to="/login" replace />
-               } />
-               <Route path="admin/order-management" element={
-                   isAuthenticated && currentUser?.role === 'admin' ? 
-                   <OrderManagement/> : 
-                   <Navigate to="/login" replace />
-               } />
-            </Route>
-            <Route path="/login" element={<Login/>} />
-        </Routes>
-    );
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout/:id" element={<Checkout />} />
+        <Route
+          path="/admin"
+          element={
+            isAuthenticated && currentUser?.role === "admin" ? (
+              <Dashboard />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="admin/order-management"
+          element={
+            isAuthenticated && currentUser?.role === "admin" ? (
+              <OrderManagement />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+      </Route>
+      <Route path="/login" element={<Login />} />
+    </Routes>
+  );
 }

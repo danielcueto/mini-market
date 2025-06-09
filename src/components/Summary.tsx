@@ -1,41 +1,62 @@
-import { useMemo, type JSX } from "react";
+import { useMemo, type ReactNode } from "react";
+import { Card, CardContent, CardHeader, CardFooter } from "./ui/Card";
 
-type SumaryProps = {
+type SummaryProps = {
   subtotal: number;
   shipping?: number;
   taxes?: number;
-  children?: JSX.Element;
+  children?: ReactNode;
 };
 
-export function Summary({ subtotal, shipping, taxes, children }: SumaryProps) {
+export function Summary({ subtotal, shipping, taxes, children }: SummaryProps) {
   const total: number = useMemo((): number => {
     return subtotal + (shipping ?? 0) + (taxes ?? 0);
   }, [subtotal, shipping, taxes]);
 
   return (
-    <div className="border-[1px] p-2">
-      <h2 className="font-bold">Sumary ( 1 item)</h2>
-      <div className="flex flex-col border-b-[1px] gap-2 pb-1">
-        <div className="flex flex-row justify-between">
-          <div>Subtotal</div>
-          <div>{subtotal}</div>
+    <Card>
+      <CardHeader>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          Order <span className="text-[#C6FF00]">Summary</span>
+        </h2>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <span className="text-gray-600 dark:text-gray-400">Subtotal</span>
+            <span className="font-medium text-gray-900 dark:text-white">
+              ${subtotal.toFixed(2)}
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-gray-600 dark:text-gray-400">Shipping</span>
+            <span className="font-medium text-gray-900 dark:text-white">
+              {shipping ? (
+                `$${shipping.toFixed(2)}`
+              ) : (
+                <span className="text-[#C6FF00] font-bold">Free</span>
+              )}
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-gray-600 dark:text-gray-400">Est. Taxes</span>
+            <span className="font-medium text-gray-900 dark:text-white">
+              {taxes ? `$${taxes.toFixed(2)}` : "$0.00"}
+            </span>
+          </div>
+          <div className="border-t border-gray-200 dark:border-gray-700 pt-3">
+            <div className="flex justify-between items-center">
+              <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                Total
+              </span>
+              <span className="text-lg font-bold text-[#C6FF00]">
+                ${total.toFixed(2)}
+              </span>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-row justify-between">
-          <div>Shipping</div>
-          <div>{shipping ? shipping : "-"}</div>
-        </div>
-        <div className="flex flex-row justify-between">
-          <div> Est.Taxes</div>
-          <div> {taxes ? taxes : "-"} </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-row justify-between">
-          <div>Total</div>
-          <div>{total}</div>
-        </div>
-        {children}
-      </div>
-    </div>
+      </CardContent>
+      {children && <CardFooter>{children}</CardFooter>}
+    </Card>
   );
 }

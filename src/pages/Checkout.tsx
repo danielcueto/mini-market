@@ -1,6 +1,7 @@
 import { useMemo, type FormEvent } from "react";
 import { Summary } from "../components/Summary";
-import { GrStatusGood } from "react-icons/gr";
+import { Card, CardHeader, CardContent } from "../components/ui/Card";
+import { Button } from "../components/ui/Button";
 
 interface Product {
   id: number;
@@ -58,98 +59,123 @@ const products: Product[] = [
   },
 ];
 
-export function Checkout() {
-  const subtotal: number = useMemo((): number => {
+export function Checkout() {  const subtotal: number = useMemo((): number => {
     let productsSubtotal = 0;
     products.map((product: Product) => {
       productsSubtotal += product.price;
     });
     const numberRounded = Math.round(productsSubtotal * 100) / 100;
     return numberRounded;
-  }, [products]);
+  }, []);
 
   const handleSubmitGifCode = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
   return (
-    <div className="w-full flex justify-center">
-      <div className="min-w-[320px] flex flex-col-reverse gap-2 p-3 md:grid md:grid-cols-[1fr_30%] md:gap-3 md:justify-items-center w-full">
-        <section className="w-full flex flex-col gap-3">
-          <article className="border-b-[1px] flex flex-row gap-2 items-center p-2">
-            <GrStatusGood size={"100%"} className="w-1/12" />
-            <div>
-              <div>Order 123123</div>
-              <div>Thank you, Pedro Perez!</div>
-            </div>
-          </article>
-          <article className="border-b-[1px] p-2">
-            <p>Your order is confirmed</p>
-            <p>We've accepted your order and we're getting it ready</p>
-          </article>
-          <article className="p-2">
-            <h1></h1>
-            <div className="grid grid-cols-2 grid-rows-2">
-              <div>
-                <h3 className="font-bold">Shipping address</h3>
-                <p>
-                  1234 Elm Street, Apt 56B
-                  <br />
-                  Springfield, IL 62704
-                  <br />
-                  United States
-                </p>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-6">
+          <Card>
+            <CardContent className="flex items-center gap-4">              <div className="flex items-center justify-center w-12 h-12 bg-[#C6FF00]/10 dark:bg-[#C6FF00]/20 rounded-full">
+                <svg className="w-6 h-6 text-[#C6FF00]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>              <div>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Pedido <span className="text-[#C6FF00]">#123123</span>
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">¡Gracias, Pedro Pérez!</p>
               </div>
+            </CardContent>
+          </Card>
 
-              <div>
-                <h3 className="font-bold">Billing address</h3>
-                <p>
-                  5678 Oak Avenue, Suite 101
-                  <br />
-                  Chicago, IL 60616
-                  <br />
-                  United States
-                </p>
-              </div>
+          <Card>
+            <CardContent>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                Tu pedido está <span className="text-[#C6FF00]">confirmado</span>
+              </h3>              <p className="text-gray-600 dark:text-gray-400">
+                Hemos aceptado tu pedido y lo estamos preparando para el envío.
+              </p>
+            </CardContent>
+          </Card>
 
-              <div>
-                <h3 className="font-bold">Shipping method</h3>
-                <p>
-                  Express Delivery - 2 to 3 business days
-                  <br />
-                  Carrier: FedEx
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card>
+              <CardHeader>
+                <h3 className="font-semibold text-gray-900 dark:text-white">
+                  <span className="text-[#C6FF00]">Dirección</span> de envío
+                </h3>
+              </CardHeader>
+              <CardContent>                <p className="text-gray-600 dark:text-gray-400">
+                  1234 Elm Street, Apt 56B<br />
+                  Springfield, IL 62704<br />
+                  Estados Unidos
                 </p>
-              </div>
+              </CardContent>
+            </Card>
 
-              <div>
-                <h3 className="font-bold">Payment Method</h3>
-                <p>
-                  Visa ending in 4242
-                  <br />
-                  Expiration: 12/26
+            <Card>              <CardHeader>
+                <h3 className="font-semibold text-gray-900 dark:text-white">
+                  <span className="text-[#C6FF00]">Dirección</span> de facturación
+                </h3>
+              </CardHeader>
+              <CardContent>
+                <p className="text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary)]">
+                  5678 Oak Avenue, Suite 101<br />
+                  Chicago, IL 60616<br />
+                  Estados Unidos
                 </p>
-              </div>
-            </div>
-          </article>
-        </section>
-        <section className="flex flex-col gap-3 w-full mb-3">
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <h3 className="font-semibold text-gray-900 dark:text-white">
+                  <span className="text-[#C6FF00]">Método</span> de envío
+                </h3>
+              </CardHeader>
+              <CardContent>                <p className="text-gray-600 dark:text-gray-400">
+                  Entrega Express - 2 a 3 días hábiles<br />
+                  Transportista: FedEx
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>                <h3 className="font-semibold text-gray-900 dark:text-white">
+                  <span className="text-[#C6FF00]">Método</span> de pago
+                </h3>
+              </CardHeader>
+              <CardContent>                <p className="text-gray-600 dark:text-gray-400">
+                  Visa terminada en 4242<br />
+                  Vencimiento: 12/26
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        <div className="lg:col-span-1">
           <Summary subtotal={subtotal}>
-            <form onSubmit={handleSubmitGifCode} className="w-full flex flex-col justify-baseline">
-              <label htmlFor="gif-card">Gif card or discount</label>
-              <div className="w-full pt-1 pb-1 grid grid-rows-2 gap-1 xl:grid-cols-[1fr_20%]">
-                <input
-                  className="p-1 border-[1px]"
-                  id="gif-card"
-                  type="text"
-                  placeholder="Gif code"
-                />
-                <button type="submit" className="p-3 border-[1px] bg-gray-500 hover:bg-gray-700 text-white font-bold">
-                  Apply
-                </button>
+            <form onSubmit={handleSubmitGifCode} className="space-y-4">
+              <div>                <label htmlFor="gif-card" className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                  <span className="text-[#C6FF00]">Tarjeta regalo</span> o descuento
+                </label>
+                <div className="flex gap-2">                  <input
+                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#C6FF00] focus:border-[#C6FF00] transition-colors"
+                    id="gif-card"
+                    type="text"
+                    placeholder="Código de regalo"
+                  />
+                  <Button type="submit" variant="outline" size="sm">
+                    Aplicar
+                  </Button>
+                </div>
               </div>
             </form>
           </Summary>
-        </section>
+        </div>
       </div>
     </div>
   );
