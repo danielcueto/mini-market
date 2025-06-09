@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useCarts } from "../hooks/useCarts";
 import { useAuth } from "../hooks/useAuth";
 import type { CartItem } from "../interfaces/Cart";
@@ -20,6 +20,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
     if (!context) return null;
 
     const { showNotification } = context;
+  useEffect(() => {
+    if (!currentUser) return;
+    createCartIfNotExists(currentUser.id);
+  }, [currentUser]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -30,11 +34,6 @@ export function ProductInfo({ product }: ProductInfoProps) {
 
      const handleAddToCart = () => {
         let cart = getCartByUser(currentUser!.id);
-        if (!cart) {
-            createCartIfNotExists(currentUser!.id);
-            cart = getCartByUser(currentUser!.id);
-        }
-
         const existingItem = cart!.items.find(item => item.product.name === product!.name);
 
         if (existingItem) {

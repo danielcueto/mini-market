@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaFilter, FaTimes, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { Button } from "../components/ui/Button";
@@ -25,6 +25,10 @@ export function HomePage() {
   if (!context) return null;
     
   const { showNotification } = context;
+  useEffect(() => {
+    if (!currentUser) return;
+    createCartIfNotExists(currentUser.id);
+  }, [currentUser]);
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategories((prev) =>
@@ -56,11 +60,6 @@ export function HomePage() {
     }
 
     let cart = getCartByUser(currentUser.id);
-    if (!cart) {
-      createCartIfNotExists(currentUser.id);
-      cart = getCartByUser(currentUser.id);
-    }
-
     const existingItem = cart!.items.find(
       (item) => item.product.name === product.name
     );
