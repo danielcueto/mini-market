@@ -62,7 +62,7 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
   };
   return (
     <div className="p-6">
-      {" "}
+      
       <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
         {productToEdit ? (
           <span>
@@ -80,7 +80,7 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
       >
         <div className="flex flex-col gap-4 flex-1">
           <div>
-            {" "}
+            
             <input
               type="text"
               placeholder="Nombre del producto"
@@ -94,7 +94,7 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
             )}
           </div>
           <div>
-            {" "}
+            
             <textarea
               placeholder="Descripción"
               rows={3}
@@ -108,7 +108,7 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
             )}
           </div>
           <div>
-            {" "}
+            
             <input
               type="text"
               placeholder="Categoría"
@@ -120,7 +120,7 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
                 {errors.category.message}
               </span>
             )}
-          </div>{" "}
+          </div>
           <div>
             <input
               type="text"
@@ -133,7 +133,7 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
                 {errors.image.message}
               </span>
             )}
-          </div>{" "}
+          </div>
           <div>
             <input
               type="number"
@@ -161,7 +161,7 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
         <div className="flex-1 flex items-center justify-center">
           {imagePreview ? (
             <div className="w-full max-w-sm">
-              {" "}
+              
               <img
                 src={imagePreview}
                 alt="Vista previa"

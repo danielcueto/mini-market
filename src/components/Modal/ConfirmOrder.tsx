@@ -27,7 +27,7 @@ export function ConfirmOrder({ onConfirmOrder, onClose }: ConfirmOrderProps) {
             d="M5 13l4 4L19 7"
           />
         </svg>
-      </div>{" "}
+      </div>
       <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 text-center">
         Confirmar pedido
       </h2>
