@@ -18,7 +18,7 @@ export function SwitchRole() {
         }
       >
         {({ isActive }) => (
-          <span className={isActive ? "text-[#C6FF00]" : ""}>Home</span>
+          <span className={isActive ? "dark:text-[#C6FF00] text-[#769700]" : ""}>Home</span>
         )}
       </NavLink>
 
@@ -34,7 +34,7 @@ export function SwitchRole() {
           }
         >
           {({ isActive }) => (
-            <span className={isActive ? "text-[#C6FF00]" : ""}>Admin</span>
+            <span className={isActive ? "dark:text-[#C6FF00] text-[#769700]" : ""}>Admin</span>
           )}
         </NavLink>
       )}

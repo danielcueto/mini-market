@@ -59,7 +59,7 @@ export function Login() {
             </div>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Welcome <span className="text-[#C6FF00]">Back</span>
+            Welcome <span className="dark:text-[#C6FF00] text-[#769700]">Back</span>
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             Sign in to your account
@@ -70,7 +70,7 @@ export function Login() {
           <CardHeader>
             <Link
               to="/"
-              className="text-sm text-blue-600 dark:text-blue-400 hover:text-[#C6FF00] dark:hover:text-[#C6FF00] hover:underline mb-4 inline-block transition-colors"
+              className="text-sm text-blue-600 dark:text-blue-400 hover:dark:text-[#C6FF00] text-[#769700] dark:hover:dark:text-[#C6FF00] text-[#769700] hover:underline mb-4 inline-block transition-colors"
             >
               ← Back to Home
             </Link>
@@ -96,7 +96,7 @@ export function Login() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-[#C6FF00] focus:border-transparent transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-[#769700] dark:focus:ring-[#C6FF00] focus:border-transparent transition-colors"
                   placeholder="Enter your email"
                   disabled={isLoading}
                 />
@@ -113,7 +113,7 @@ export function Login() {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-[#C6FF00] focus:border-transparent transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-[#769700] dark:focus:ring-[#C6FF00] focus:border-transparent transition-colors"
                   placeholder="Enter your password"
                   disabled={isLoading}
                 />

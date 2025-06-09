@@ -9,7 +9,7 @@ export function OrderManagement() {
       
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Gestión de <span className="text-[#C6FF00]">Pedidos</span>
+          Gestión de <span className="dark:text-[#C6FF00] text-[#769700]">Pedidos</span>
         </h1>
         <p className="text-gray-600 dark:text-gray-400">
           Administra y revisa todos los pedidos de clientes

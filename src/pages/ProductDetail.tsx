@@ -24,7 +24,7 @@ export function ProductDetail() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            <span className="text-[#C6FF00]">Producto</span> no encontrado
+            <span className="dark:text-[#C6FF00] text-[#769700]">Producto</span> no encontrado
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mb-8">
             El producto que buscas no existe o ha sido eliminado.

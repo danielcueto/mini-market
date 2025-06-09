@@ -27,7 +27,7 @@ export function Button({
     outline:
       "border-2 border-blue-600 text-blue-600 bg-transparent hover:bg-blue-600 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-400 dark:hover:text-gray-900 hover:border-[#C6FF00] dark:hover:border-[#C6FF00]",
     ghost:
-      "bg-transparent text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-gray-800 hover:text-[#C6FF00] dark:hover:text-[#C6FF00]",
+      "bg-transparent text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-gray-800 hover:dark:text-[#C6FF00] text-[#769700] dark:hover:dark:text-[#C6FF00] text-[#769700]",
   };
 
   const sizeClasses = {

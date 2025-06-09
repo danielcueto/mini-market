@@ -76,11 +76,11 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
       <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
         {productToEdit ? (
           <span>
-            Editar <span className="text-[#C6FF00]">Producto</span>
+            Editar <span className="dark:text-[#C6FF00] text-[#769700]">Producto</span>
           </span>
         ) : (
           <span>
-            Crear <span className="text-[#C6FF00]">Producto</span>
+            Crear <span className="dark:text-[#C6FF00] text-[#769700]">Producto</span>
           </span>
         )}
       </h2>
@@ -94,7 +94,7 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
             <input
               type="text"
               placeholder="Nombre del producto"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#C6FF00] focus:border-[#C6FF00] transition-colors"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#769700] dark:focus:ring-[#C6FF00] focus:border-[#769700] dark:focus:border-[#C6FF00] transition-colors"
               {...register("name")}
             />
             {errors.name && (
@@ -108,7 +108,7 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
             <textarea
               placeholder="Descripción"
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#C6FF00] focus:border-[#C6FF00] transition-colors resize-none"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#769700] dark:focus:ring-[#C6FF00] focus:border-[#769700] dark:focus:border-[#C6FF00] transition-colors resize-none"
               {...register("description")}
             />
             {errors.description && (
@@ -122,7 +122,7 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
             <input
               type="text"
               placeholder="Categoría"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#C6FF00] focus:border-[#C6FF00] transition-colors"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#769700] dark:focus:ring-[#C6FF00] focus:border-[#769700] dark:focus:border-[#C6FF00] transition-colors"
               {...register("category")}
             />
             {errors.category && (

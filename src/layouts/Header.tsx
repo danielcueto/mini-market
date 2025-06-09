@@ -34,7 +34,7 @@ export function Header() {
             </div>
 
             <h1 className="text-lg font-bold text-gray-900 dark:text-white">
-              Mini <span className="text-[#C6FF00]">Market</span>
+              Mini <span className="dark:text-[#C6FF00] text-[#769700]">Market</span>
             </h1>
           </Link>
 
@@ -58,7 +58,7 @@ export function Header() {
             ) : (
               <Link
                 to="/login"
-                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#C6FF00] rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-600"
+                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:dark:text-[#C6FF00] text-[#769700] rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-600"
               >
                 <FaSignInAlt className="text-sm" />
                 <span>Login</span>
@@ -76,7 +76,7 @@ export function Header() {
                 <span className="text-white font-bold text-lg">M</span>
               </div>
               <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                Mini <span className="text-[#C6FF00]">Market</span>
+                Mini <span className="dark:text-[#C6FF00] text-[#769700]">Market</span>
               </h1>
             </Link>
             {isAuthenticated && <SwitchRole />}
@@ -108,7 +108,7 @@ export function Header() {
             ) : (
               <Link
                 to="/login"
-                className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-[#C6FF00] transition-colors px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-600"
+                className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:dark:text-[#C6FF00] text-[#769700] transition-colors px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-300 dark:border-gray-600"
               >
                 <FaSignInAlt className="text-lg" />
                 <span className="font-medium">Login</span>

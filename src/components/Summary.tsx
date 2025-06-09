@@ -17,7 +17,7 @@ export function Summary({ subtotal, shipping, taxes, children }: SummaryProps) {
     <Card>
       <CardHeader>
         <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-          Order <span className="text-[#C6FF00]">Summary</span>
+          Order <span className="dark:text-[#C6FF00] text-[#769700]">Summary</span>
         </h2>
       </CardHeader>
       <CardContent>
@@ -34,7 +34,7 @@ export function Summary({ subtotal, shipping, taxes, children }: SummaryProps) {
               {shipping ? (
                 `$${shipping.toFixed(2)}`
               ) : (
-                <span className="text-[#C6FF00] font-bold">Free</span>
+                <span className="dark:text-[#C6FF00] text-[#769700] font-bold">Free</span>
               )}
             </span>
           </div>
@@ -49,7 +49,7 @@ export function Summary({ subtotal, shipping, taxes, children }: SummaryProps) {
               <span className="text-lg font-semibold text-gray-900 dark:text-white">
                 Total
               </span>
-              <span className="text-lg font-bold text-[#C6FF00]">
+              <span className="text-lg font-bold dark:text-[#C6FF00] text-[#769700]">
                 ${total.toFixed(2)}
               </span>
             </div>

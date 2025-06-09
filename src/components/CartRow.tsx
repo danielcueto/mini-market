@@ -95,7 +95,7 @@ export function CartRow({
       </div>
 
       <div className="flex items-center justify-center">
-        <span className="font-semibold text-[#C6FF00]">
+        <span className="font-semibold dark:text-[#C6FF00] text-[#769700]">
           ${price.toFixed(2)}
         </span>
       </div>
@@ -107,7 +107,7 @@ export function CartRow({
           className="flex flex-col items-center gap-2"
         >
           <input
-            className="w-16 text-center px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#C6FF00] focus:border-[#C6FF00] transition-colors"
+            className="w-16 text-center px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#769700] dark:focus:ring-[#C6FF00] focus:border-[#769700] dark:focus:border-[#C6FF00] transition-colors"
             value={inputQuantity}
             onChange={handleChangeQuantity}
             onFocus={() => setIsEditable(true)}

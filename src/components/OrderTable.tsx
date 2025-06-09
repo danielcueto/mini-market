@@ -44,7 +44,7 @@ export function OrderTable({ orders }: OrderTableProps) {
                 className="hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
               >
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-[#C6FF00]">
+                  <div className="text-sm font-medium dark:text-[#C6FF00] text-[#769700]">
                     #{order.id}
                   </div>
                 </td>
@@ -59,7 +59,7 @@ export function OrderTable({ orders }: OrderTableProps) {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-semibold text-[#C6FF00]">
+                  <div className="text-sm font-semibold dark:text-[#C6FF00] text-[#769700]">
                     ${(order.total || 0).toFixed(2)}
                   </div>
                 </td>
@@ -112,7 +112,7 @@ export function OrderTable({ orders }: OrderTableProps) {
               />
             </svg>
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              No hay <span className="text-[#C6FF00]">pedidos</span>
+              No hay <span className="dark:text-[#C6FF00] text-[#769700]">pedidos</span>
             </h3>
             <p className="text-gray-500 dark:text-gray-400">
               Los pedidos aparecerán aquí cuando se realicen.

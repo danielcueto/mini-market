@@ -8,7 +8,7 @@ export function RelatedProduct() {
     <div className="space-y-6">
       
       <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-        <span className="text-[#C6FF00]">Productos</span> relacionados
+        <span className="dark:text-[#C6FF00] text-[#769700]">Productos</span> relacionados
       </h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {products.slice(0, 6).map((product) => (
@@ -30,7 +30,7 @@ export function RelatedProduct() {
               <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                 {product.name}
               </p>
-              <p className="text-sm text-[#C6FF00] font-semibold">
+              <p className="text-sm dark:text-[#C6FF00] text-[#769700] font-semibold">
                 ${product.price.toFixed(2)}
               </p>
             </div>

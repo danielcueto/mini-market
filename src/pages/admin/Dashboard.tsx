@@ -23,7 +23,7 @@ export function Dashboard() {
         
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Panel de <span className="text-[#C6FF00]">Administración</span>
+            Panel de <span className="dark:text-[#C6FF00] text-[#769700]">Administración</span>
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             Gestiona tus productos y pedidos

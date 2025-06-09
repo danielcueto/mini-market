@@ -32,7 +32,7 @@ export function Checkout() {
               {" "}
               <div className="flex items-center justify-center w-12 h-12 bg-[#C6FF00]/10 dark:bg-[#C6FF00]/20 rounded-full">
                 <svg
-                  className="w-6 h-6 text-[#C6FF00]"
+                  className="w-6 h-6 dark:text-[#C6FF00] text-[#769700]"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -48,7 +48,7 @@ export function Checkout() {
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                   Pedido{" "}
-                  <span className="text-[#C6FF00]">
+                  <span className="dark:text-[#C6FF00] text-[#769700]">
                     {id?.slice(0,7)}
                   </span>
                 </h2>
@@ -63,7 +63,7 @@ export function Checkout() {
             <CardContent>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
                 Tu pedido está{" "}
-                <span className="text-[#C6FF00]">confirmado</span>
+                <span className="dark:text-[#C6FF00] text-[#769700]">confirmado</span>
               </h3>{" "}
               <p className="text-gray-600 dark:text-gray-400">
                 Hemos aceptado tu pedido y lo estamos preparando para el envío.
@@ -75,7 +75,7 @@ export function Checkout() {
             <Card>
               <CardHeader>
                 <h3 className="font-semibold text-gray-900 dark:text-white">
-                  <span className="text-[#C6FF00]">Dirección</span> de envío
+                  <span className="dark:text-[#C6FF00] text-[#769700]">Dirección</span> de envío
                 </h3>
               </CardHeader>
               <CardContent>
@@ -94,7 +94,7 @@ export function Checkout() {
               {" "}
               <CardHeader>
                 <h3 className="font-semibold text-gray-900 dark:text-white">
-                  <span className="text-[#C6FF00]">Dirección</span> de
+                  <span className="dark:text-[#C6FF00] text-[#769700]">Dirección</span> de
                   facturación
                 </h3>
               </CardHeader>
@@ -112,7 +112,7 @@ export function Checkout() {
             <Card>
               <CardHeader>
                 <h3 className="font-semibold text-gray-900 dark:text-white">
-                  <span className="text-[#C6FF00]">Método</span> de envío
+                  <span className="dark:text-[#C6FF00] text-[#769700]">Método</span> de envío
                 </h3>
               </CardHeader>
               <CardContent>
@@ -129,7 +129,7 @@ export function Checkout() {
               <CardHeader>
                 {" "}
                 <h3 className="font-semibold text-gray-900 dark:text-white">
-                  <span className="text-[#C6FF00]">Método</span> de pago
+                  <span className="dark:text-[#C6FF00] text-[#769700]">Método</span> de pago
                 </h3>
               </CardHeader>
               <CardContent>
@@ -153,13 +153,13 @@ export function Checkout() {
                   htmlFor="gif-card"
                   className="block text-sm font-medium text-gray-900 dark:text-white mb-2"
                 >
-                  <span className="text-[#C6FF00]">Tarjeta regalo</span> o
+                  <span className="dark:text-[#C6FF00] text-[#769700]">Tarjeta regalo</span> o
                   descuento
                 </label>
                 <div className="flex gap-2">
                   {" "}
                   <input
-                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#C6FF00] focus:border-[#C6FF00] transition-colors"
+                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#769700] dark:focus:ring-[#C6FF00] focus:border-[#769700] dark:focus:border-[#C6FF00] transition-colors"
                     id="gif-card"
                     type="text"
                     placeholder="Código de regalo"

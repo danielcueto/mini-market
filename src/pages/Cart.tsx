@@ -79,7 +79,7 @@ export function Cart() {
             <Card>
               <CardHeader>
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  My <span className="text-[#C6FF00]">Cart</span>
+                  My <span className="dark:text-[#C6FF00] text-[#769700]">Cart</span>
                 </h1>
               </CardHeader>
               <CardContent>
@@ -127,7 +127,7 @@ export function Cart() {
                     <div className="text-right">
                       <p className="text-lg font-semibold text-gray-900 dark:text-white">
                         Subtotal:
-                        <span className="text-[#C6FF00] font-bold">
+                        <span className="dark:text-[#C6FF00] text-[#769700] font-bold">
                           ${subtotal}
                         </span>
                       </p>

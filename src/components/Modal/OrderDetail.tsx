@@ -78,7 +78,7 @@ export function OrderDetail({ order }: OrderDetailsModalProps) {
               <span className="text-lg font-semibold text-gray-900 dark:text-white">
                 Total:
               </span>
-              <span className="text-lg font-bold text-[#C6FF00]">
+              <span className="text-lg font-bold dark:text-[#C6FF00] text-[#769700]">
                 ${(order.total || 0).toFixed(2)}
               </span>
             </div>
