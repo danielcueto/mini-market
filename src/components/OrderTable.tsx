@@ -41,7 +41,7 @@ export function OrderTable({ orders }: OrderTableProps) {
             {orders.map((order) => (
               <tr
                 key={order.id}
-                className="hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                className="hover:bg-gray-50 dark:hover:bg-gray-400 transition-colors"
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium dark:text-[#C6FF00] text-[#769700]">
