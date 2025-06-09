@@ -8,6 +8,7 @@ import { OrderManagement } from "../pages/admin/OrderManagement";
 import { Login } from "../pages/Login";
 import { Checkout } from "../pages/Checkout";
 import { useAuth } from "../hooks/useAuth";
+import { NotFound } from "../pages/NotFound";
 
 export function AppRoutes() {
   const { isAuthenticated, currentUser } = useAuth();
@@ -41,6 +42,7 @@ export function AppRoutes() {
         />
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
