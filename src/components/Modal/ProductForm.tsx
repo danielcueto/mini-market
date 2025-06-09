@@ -5,6 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { productSchema } from "../../schemas/productSchema";
 import type { Product } from "../../interfaces/Product";
 import { Button } from "../ui/Button";
+import { useContext } from "react";
+import { NotificationContext } from "../../context/NotificationContext";
+
 
 type FormProductData = {
   name: string;
@@ -22,6 +25,7 @@ interface ProductFormProps {
 export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
   const { addProduct, updateProduct } = useProducts();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const context = useContext(NotificationContext);
 
   const {
     register,
@@ -32,6 +36,10 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
   } = useForm<FormProductData>({
     resolver: yupResolver(productSchema),
   });
+
+  if (!context) return null;
+
+  const { showNotification } = context;
 
   const watchedImage = watch("image");
 
@@ -52,11 +60,13 @@ export function ProductForm({ onClose, productToEdit }: ProductFormProps) {
   const onSubmit = (formData: FormProductData) => {
     if (productToEdit) {
       updateProduct(productToEdit.id, formData);
+      showNotification("Update product succesfull", "success");
     } else {
       addProduct({
         id: crypto.randomUUID(),
         ...formData,
       });
+      showNotification("Add product succesfull", "success");
     }
     onClose();
   };

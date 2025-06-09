@@ -8,6 +8,7 @@ import { SwitchRole } from "./SwichRole";
 import { Link, useNavigate } from "react-router";
 import { DarkModeToggle } from "../components/DarkModeToggle";
 import { useAuth } from "../hooks/useAuth";
+import { Notification } from "../components/Notification";
 
 export function Header() {
   const { currentUser, logout, isAuthenticated } = useAuth();
@@ -121,6 +122,7 @@ export function Header() {
             <SwitchRole />
           </div>
         )}
+        <Notification />
       </div>
     </header>
   );

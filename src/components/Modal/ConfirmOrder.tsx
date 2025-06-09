@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { Button } from "../ui/Button";
+import { NotificationContext } from "../../context/NotificationContext";
 
 interface ConfirmOrderProps {
   onConfirmOrder: () => void;
@@ -6,8 +8,15 @@ interface ConfirmOrderProps {
 }
 
 export function ConfirmOrder({ onConfirmOrder, onClose }: ConfirmOrderProps) {
+  const context = useContext(NotificationContext);
+    
+  if (!context) return null;
+    
+  const { showNotification } = context;
+    
   const handleConfirmOrder = () => {
     onConfirmOrder();
+    showNotification("Order create succesfull", "success");
     onClose();
   };
 

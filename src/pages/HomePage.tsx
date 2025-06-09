@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaFilter, FaTimes, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { Button } from "../components/ui/Button";
@@ -8,6 +8,7 @@ import { useCarts } from "../hooks/useCarts";
 import { useAuth } from "../hooks/useAuth";
 import type { Product } from "../interfaces/Product";
 import type { CartItem } from "../interfaces/Cart";
+import { NotificationContext } from "../context/NotificationContext";
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -19,6 +20,12 @@ export function HomePage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]);
+  const context = useContext(NotificationContext);
+    
+  if (!context) return null;
+    
+  const { showNotification } = context;
+
   const handleCategoryChange = (category: string) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
@@ -64,6 +71,7 @@ export function HomePage() {
         quantity: existingItem.quantity + 1,
       };
       updateCartItem(cart!.id, existingItem.id, updatedItem);
+      showNotification("Update quantity succesfull", "success");
     } else {
       const newCartItem: CartItem = {
         id: crypto.randomUUID(),
@@ -76,6 +84,7 @@ export function HomePage() {
         quantity: 1,
       };
       addCartItem(cart!.id, newCartItem);
+      showNotification("Add product to cart succesfull", "success");
     }
   };
   const filteredProducts = products.filter((product) => {
